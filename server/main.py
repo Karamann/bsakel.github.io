@@ -66,7 +66,7 @@ def watch_paged(offset:int=Query(0,ge=0,le=100000),limit:int=Query(42,ge=1,le=42
     if state=="thinking":
         return {"id":row["id"],"status":"thinking","tag":"","total":0,"offset":0,"lines":[]}
     answer=row["answer"] if state=="ready" else row["error"]
-    paragraphs=answer.replace("\\r\\n","\\n").split("\\n")
+    paragraphs=answer.replace("\r\n","\n").split("\n")
     all_lines=[]
     for part in paragraphs:
         all_lines.extend(textwrap.wrap(part,width=19,break_long_words=True,break_on_hyphens=False) or [""])
