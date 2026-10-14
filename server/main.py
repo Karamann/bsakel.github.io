@@ -4,7 +4,7 @@ from fastapi import FastAPI,BackgroundTasks,Header,HTTPException,Query
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel,Field
-from .store import latest,insert,wrap
+from .store import latest,insert,recent,select_message,shift_section,display_lines,metadata,persistent
 from .ai import generate
 app=FastAPI(title="Garmin GPT",docs_url=None,redoc_url=None)
 app.mount("/static",StaticFiles(directory=Path(__file__).parent/"static"),name="static")
@@ -20,7 +20,7 @@ class SharedAnswer(BaseModel):
 @app.get("/")
 def homepage(): return FileResponse(Path(__file__).parent/"static"/"index.html")
 @app.get("/health")
-def health(): return {"ok":True,"paired":bool(TOKEN),"openai_configured":bool(os.getenv("OPENAI_API_KEY"))}
+def health(): return {"ok":True,"paired":bool(TOKEN),"openai_configured":bool(os.getenv("OPENAI_API_KEY")),"persistent":persistent()}
 @app.post("/api/demo")
 def demo(authorization:str|None=Header(None)):
     auth(authorization)
@@ -41,20 +41,36 @@ def relay(data:SharedAnswer,authorization:str|None=Header(None)):
     if not answer: raise HTTPException(422,"No text supplied")
     id=insert("Copied from ChatGPT",answer,"ready")
     return {"id":id,"status":"ready"}
+@app.get("/api/history")
+def history(authorization:str|None=Header(None)):
+    auth(authorization)
+    return {"messages":recent()}
+
+@app.post("/api/select")
+def choose(data:SelectedMessage,authorization:str|None=Header(None)):
+    auth(authorization)
+    select_message(data.id)
+    return {"selected_id":data.id,"status":"ready"}
+
+@app.post("/api/section")
+def section(data:PageMove,authorization:str|None=Header(None)):
+    auth(authorization)
+    return shift_section(data.delta)
+
 @app.get("/api/latest")
 def get_latest(authorization:str|None=Header(None)):
     auth(authorization)
     r=latest()
-    if not r: return {"id":0,"status":"empty","question":"","answer":"","lines":[]}
+    if not r: return {"id":0,"status":"empty","question":"","answer":"","lines":[],"section":0,"sections":0}
     a=r["answer"] if r["status"]=="ready" else (r["error"] if r["status"]=="error" else "")
-    return {"id":r["id"],"status":r["status"],"question":r["question"],"answer":a,"lines":wrap(a)}
+    return {"id":r["id"],"status":r["status"],"question":r["question"],"answer":a,"lines":display_lines(r),**metadata(r)}
 @app.get("/api/watch")
 def watch(authorization:str|None=Header(None)):
     auth(authorization)
     r=latest()
-    if not r: return {"id":0,"status":"empty","lines":[]}
+    if not r: return {"id":0,"status":"empty","lines":[],"section":0,"sections":0}
     a=r["answer"] if r["status"]=="ready" else (r["error"] if r["status"]=="error" else "")
-    return {"id":r["id"],"status":r["status"],"lines":wrap(a)}
+    return {"id":r["id"],"status":r["status"],"lines":display_lines(r),**metadata(r)}
 
 @app.get("/api/v2/watch")
 def watch_paged(offset:int=Query(0,ge=0,le=100000),limit:int=Query(42,ge=1,le=42),authorization:str|None=Header(None)):
