@@ -1,1 +1,23 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Garmin GPT</title><link rel="stylesheet" href="/static/style.css"></head><body><main><h1>Garmin GPT</h1><p>Ask on your iPhone. Read on your Garmin Instinct 3 Solar.</p><section><label>Pairing token</label><input id="token" type="password" placeholder="Enter pairing token"></section><section><label>Question</label><textarea id="question" placeholder="Ask something"></textarea><p><button id="send">Send to watch</button> <button id="demo">Test connection</button> <button id="refresh">Refresh</button></p><p id="status">Ready</p></section><section><h2>Latest answer</h2><div id="answer">No messages</div></section></main><script src="/static/app.js"></script></body></html>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1424">
+<title>Garmin GPT — Share ChatGPT answers</title>
+<link rel="stylesheet" href="/static/style.css">
+</head><body><main>
+<header><div class="eyebrow">INSTINCT 3 SOLAR</div><h1>Garmin GPT</h1><p>Read your ChatGPT answers on your watch. The Garmin app checks for new text approximately every 10 seconds while open.</p></header>
+<section><label for="token">Private pairing token</label><input id="token" type="password" placeholder="Your existing pairing token" autocomplete="off">
+<small>Saved on this iPhone only. You don't need an OpenAI API key to send copied answers.</small></section>
+<section class="primary"><h2>Send an answer from ChatGPT</h2>
+<p>In the ChatGPT app, copy the answer you want to read. Return here, then tap the button.</p>
+<button id="sendClipboard" class="wide">Send copied answer to Garmin ↗</button>
+<details><summary>Clipboard not working? Paste manually</summary>
+<label for="copied">Copied ChatGPT answer</label><textarea id="copied" placeholder="Touch and hold here, then choose Paste"></textarea>
+<button id="sendPasted">Send pasted answer</button></details>
+<small>Long answers may be truncated on this first watch version (around 100 lines).</small></section>
+<section><h2>Ask a new question</h2><p>This separate mode calls the OpenAI API and needs an API key configured in Render.</p>
+<label for="question">Question</label><textarea id="question" placeholder="Ask something..."></textarea>
+<button id="send">Ask GPT</button> <button id="demo" class="secondary">Test connection</button></section>
+<section><div class="heading"><h2>Latest watch message</h2><button id="refresh" class="subtle">Refresh</button></div>
+<div id="status" role="status">Ready</div><div id="answer">No message yet.</div></section>
+</main><script src="/static/app.js"></script></body></html>
