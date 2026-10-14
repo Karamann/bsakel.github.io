@@ -17,6 +17,10 @@ class Prompt(BaseModel):
     question:str=Field(min_length=1,max_length=800)
 class SharedAnswer(BaseModel):
     text:str=Field(min_length=1,max_length=120000)
+class SelectedMessage(BaseModel):
+    id:int=Field(gt=0)
+class PageMove(BaseModel):
+    delta:int=Field(ge=-1,le=1)
 @app.get("/")
 def homepage(): return FileResponse(Path(__file__).parent/"static"/"index.html")
 @app.get("/health")
