@@ -1,0 +1,27 @@
+:root{color-scheme:dark;font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:#0b1424;color:#eaf3ff;line-height:1.45}
+main{max-width:610px;margin:0 auto;padding:26px 16px 60px}
+header{margin-bottom:26px}
+.eyebrow{font-size:11px;letter-spacing:.22em;color:#a6bfe3;font-weight:700}
+h1{font-size:36px;letter-spacing:-.05em;margin:5px 0 6px}
+h2{font-size:18px;margin:0 0 12px}
+p,small{color:#aabbcf}
+p{margin:8px 0 15px}
+section{padding:19px;margin:17px 0;background:#192940;border:1px solid #334767;border-radius:16px}
+section.primary{border-color:#85aadf;background:#1a3050}
+label{display:block;color:#bbcee6;font-size:13px;margin:10px 0 7px}
+input,textarea{display:block;width:100%;font:inherit;color:white;background:#0b172b;border-radius:10px;border:1px solid #4c6687;padding:13px;outline:none}
+input:focus,textarea:focus{border-color:#c2deff}
+textarea{min-height:122px;resize:vertical}
+button{font:inherit;font-weight:700;border:0;border-radius:10px;color:#10243e;background:#d5e6ff;padding:12px 15px;min-height:45px;margin:2px 4px 2px 0}
+button.wide{width:100%;min-height:55px}
+button.secondary{color:white;background:#3a5577}
+button.subtle{font-size:12px;min-height:36px;background:#354c6a;color:white;padding:8px 12px}
+button:active{opacity:.8}
+details{margin:16px 0;padding:13px;border:1px solid #536a88;border-radius:10px}
+summary{cursor:pointer;color:#d7e5f5;font-weight:600;font-size:14px}
+small{display:block;font-size:12px;line-height:1.45;margin-top:10px}
+.heading{display:flex;align-items:center;justify-content:space-between}
+#status{font-size:13px;color:#bce0bb;margin-bottom:12px}
+#answer{white-space:pre-wrap;overflow-wrap:anywhere;font-size:15px;line-height:1.58}
