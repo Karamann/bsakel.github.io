@@ -15,6 +15,8 @@ def auth(value):
         raise HTTPException(401,"Invalid pairing token")
 class Prompt(BaseModel):
     question:str=Field(min_length=1,max_length=800)
+class SharedAnswer(BaseModel):
+    text:str=Field(min_length=1,max_length=15000)
 @app.get("/")
 def homepage(): return FileResponse(Path(__file__).parent/"static"/"index.html")
 @app.get("/health")
@@ -32,6 +34,13 @@ def prompt(data:Prompt,tasks:BackgroundTasks,authorization:str|None=Header(None)
     id=insert(question)
     tasks.add_task(generate,id)
     return {"id":id,"status":"thinking"}
+@app.post("/api/relay")
+def relay(data:SharedAnswer,authorization:str|None=Header(None)):
+    auth(authorization)
+    answer=data.text.strip()
+    if not answer: raise HTTPException(422,"No text supplied")
+    id=insert("Copied from ChatGPT",answer,"ready")
+    return {"id":id,"status":"ready"}
 @app.get("/api/latest")
 def get_latest(authorization:str|None=Header(None)):
     auth(authorization)
