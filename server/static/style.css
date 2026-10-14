@@ -25,3 +25,8 @@ small{display:block;font-size:12px;line-height:1.45;margin-top:10px}
 .heading{display:flex;align-items:center;justify-content:space-between}
 #status{font-size:13px;color:#bce0bb;margin-bottom:12px}
 #answer{white-space:pre-wrap;overflow-wrap:anywhere;font-size:15px;line-height:1.58}
+
+select{display:block;width:100%;padding:12px;border-radius:10px;border:1px solid #4c6687;background:#0b172b;color:#eaf3ff;font:inherit}
+.buttons{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+#sectionCount{font-weight:600;color:#eaf3ff}
+#persistenceWarning{color:#ffd6a4}
