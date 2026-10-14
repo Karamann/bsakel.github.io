@@ -14,10 +14,23 @@
 <details><summary>Clipboard not working? Paste manually</summary>
 <label for="copied">Copied ChatGPT answer</label><textarea id="copied" placeholder="Touch and hold here, then choose Paste"></textarea>
 <button id="sendPasted">Send pasted answer</button></details>
-<small>Long answers may be truncated on this first watch version (around 100 lines).</small></section>
+<small>Long answers are stored in full. Select additional sections below; no Garmin reinstall required.</small></section>
 <section><h2>Ask a new question</h2><p>This separate mode calls the OpenAI API and needs an API key configured in Render.</p>
 <label for="question">Question</label><textarea id="question" placeholder="Ask something..."></textarea>
 <button id="send">Ask GPT</button> <button id="demo" class="secondary">Test connection</button></section>
+<section>
+<h2>Saved answers</h2>
+<p>Choose an older answer or advance to another section of a long answer. These controls change what your already-installed watch app receives.</p>
+<label for="history">Saved messages</label>
+<select id="history"><option value="">No saved messages yet</option></select>
+<div class="buttons">
+<button id="showHistory" class="secondary">Show selected on watch</button>
+<button id="previousSection" class="secondary">◀ Previous section</button>
+<button id="nextSection" class="secondary">Next section ▶</button>
+</div>
+<small id="sectionCount">Section information appears here.</small>
+<small id="persistenceWarning">Checking storage...</small>
+</section>
 <section><div class="heading"><h2>Latest watch message</h2><button id="refresh" class="subtle">Refresh</button></div>
 <div id="status" role="status">Ready</div><div id="answer">No message yet.</div></section>
 </main><script src="/static/app.js"></script></body></html>
